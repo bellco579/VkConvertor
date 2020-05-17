@@ -58,14 +58,16 @@ def getUser(uid):
 
 
 def Router(msgId):
-    msg = api.messages.getById(access_token=token, message_ids=msgId)["items"][0]
-    uid = msg['user_id']
-    user = getUser(uid)
-    text = msg['body']
-    if text != "":
-        strProcessing(text, user)
-    print("User send text {}".format(text))
-
+    try:
+        msg = api.messages.getById(access_token=token, message_ids=msgId)["items"][0]
+        uid = msg['user_id']
+        user = getUser(uid)
+        text = msg['body']
+        if text != "":
+            strProcessing(text, user)
+        print("User send text {}".format(text))
+    except:
+        pass
 
     try:
         attachments = msg['attachments']
