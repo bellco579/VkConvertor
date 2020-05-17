@@ -84,8 +84,7 @@ def Router(msgId):
     except Exception as e:
         print(e)
 
-
-if __name__ == '__main__':
+def app():
     from vk_api.longpoll import VkLongPoll, VkEventType
 
     longpoll = VkLongPoll(vk_session)
@@ -95,3 +94,6 @@ if __name__ == '__main__':
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             x = threading.Thread(target=Router, args=(event.message_id,))
             x.start()
+
+if __name__ == '__main__':
+    app()
