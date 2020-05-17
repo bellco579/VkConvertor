@@ -22,5 +22,5 @@ class Messages:
     def sendSuccess(self):
         pass
 
-    def sendError(self):
-        pass
+    def sendError(self,uid):
+        self.api.messages.send(access_token=self.token, user_id=uid, message="я не понимаю", keyboard=self.keyboard)
