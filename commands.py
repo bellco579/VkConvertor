@@ -49,3 +49,6 @@ def commands(command, context, user, message, api, token, luser=None, lusers=Non
 
     if context == "Мой id":
         message.sendMessage(message=user.uid, uid=user.uid)
+
+    if context == "Начать":
+        message.sendMessage(message="hi", uid=user.uid)
