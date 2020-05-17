@@ -11,7 +11,7 @@ def photoConverter(photoList, filename="untitle"):
     path = "docs/" + filename + ".pdf"
     print(filename)
     if len(imageList) != 0:
-      first.save(path, save_all=True, append_images=first)
+      first.save(path, save_all=True, append_images=imageList)
     else:
         first.save(path)
     return path

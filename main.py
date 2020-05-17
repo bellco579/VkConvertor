@@ -61,11 +61,12 @@ def getUser(uid):
 
 
 def Router(msgId):
+    msg = api.messages.getById(access_token=token, message_ids=msgId)["items"][0]
+    uid = msg['user_id']
+    user = getUser(uid)
+    text = msg['body']
     try:
-        msg = api.messages.getById(access_token=token, message_ids=msgId)["items"][0]
-        uid = msg['user_id']
-        user = getUser(uid)
-        text = msg['body']
+
         if text != "":
             strProcessing(text, user)
         print("User send text {}".format(text))
@@ -82,6 +83,7 @@ def Router(msgId):
             sendDoc(path=docPath, title=user.lastName, user=user)
     except Exception as e:
         print(e)
+
 
 if __name__ == '__main__':
     from vk_api.longpoll import VkLongPoll, VkEventType
