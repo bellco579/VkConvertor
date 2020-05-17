@@ -46,9 +46,7 @@ def sendDoc(path, title, user):
             is_send = Message.sendPdfToUser(attach, id)
     except:
         is_send = Message.sendPdfToUser(attach, user.linkedUser[0])
-    if not is_send:
-        Message.sendMessage(
-            message="Пользователь {} не находитя в группе".format(getVkUser(uid=user.uid, api=api, token=token)),uid=user.uid)
+
 
 
 def convertToPdf(pathList, filename="NoName"):
