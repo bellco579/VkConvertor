@@ -15,7 +15,6 @@ import vk_requests
 import requests
 import vk_api
 
-
 with open('json/config.json', "r") as js_file:
     config = json.load(js_file)
     token = config['token']
@@ -26,9 +25,10 @@ id = 1
 
 keyboard = getKeyboard()
 Message = Messages(token, keyboard, api=api)
+
+
 def getVkUser(uid, api, token):
     return api.users.get(access_token=token, user_ids=uid)
-
 
 
 def strProcessing(str, user):
@@ -40,14 +40,15 @@ def strProcessing(str, user):
 def sendDoc(path, title, user):
     attach = uploadDoc(api, token, path, title)
     Message.sendPdfToUser(attach, user.uid)
-    is_send=True
+    is_send = True
     try:
         for id in user.linkedUser:
-           is_send = Message.sendPdfToUser(attach, id)
+            is_send = Message.sendPdfToUser(attach, id)
     except:
         is_send = Message.sendPdfToUser(attach, user.linkedUser[0])
     if not is_send:
-        Message.sendMessage(message="Пользователь {} не находитя в группе".format(getVkUser(user.uid, api=api,token=token)))
+        Message.sendMessage(
+            message="Пользователь {} не находитя в группе".format(getVkUser(uid=user.uid, api=api, token=token)),uid=user.uid)
 
 
 def convertToPdf(pathList, filename="NoName"):
@@ -90,6 +91,7 @@ def Router(msgId):
     except Exception as e:
         print(e)
 
+
 def app():
     from vk_api.longpoll import VkLongPoll, VkEventType
 
@@ -100,6 +102,7 @@ def app():
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             x = threading.Thread(target=Router, args=(event.message_id,))
             x.start()
+
 
 if __name__ == '__main__':
     app()
