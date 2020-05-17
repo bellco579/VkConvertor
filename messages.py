@@ -1,6 +1,9 @@
 import json
 
 import requests
+def getVkUser(uid, api, token):
+    return api.users.get(access_token=token, user_ids=uid)
+
 
 
 class Messages:
@@ -11,7 +14,10 @@ class Messages:
 
 
     def sendPdfToUser(self, attach, uid ):
-        self.api.messages.send(access_token=self.token, user_id=uid, attachment=attach,keyboard=self.keyboard)
+        try:
+            self.api.messages.send(access_token=self.token, user_id=uid, attachment=attach,keyboard=self.keyboard)
+        except:
+            return False
 
     def sendMessage(self,message,uid):
         self.api.messages.send(access_token=self.token, user_id=uid,message=message, keyboard=self.keyboard)
