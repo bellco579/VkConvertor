@@ -15,7 +15,6 @@ import vk_requests
 import requests
 import vk_api
 
-
 token = '195dbce1b5211621a639fb7d9d82c9e0eb7b9051b2907d35649669a1dbb9638f54f9aeb3c8a40c6fd4286'
 vk_session = vk_api.VkApi(token=token)
 session = vk.Session()
@@ -59,16 +58,15 @@ def getUser(uid):
 
 
 def Router(msgId):
-    try:
-        msg = api.messages.getById(access_token=token, message_ids=msgId)["items"][0]
-        uid = msg['user_id']
-        user = getUser(uid)
-        text = msg['body']
-        if text != "":
-            strProcessing(text, user)
-        print("User send text {}".format(text))
-    except:
-        pass
+    msg = api.messages.getById(access_token=token, message_ids=msgId)["items"][0]
+    uid = msg['user_id']
+    user = getUser(uid)
+    text = msg['body']
+    if text != "":
+        strProcessing(text, user)
+    print("User send text {}".format(text))
+
+
     try:
         attachments = msg['attachments']
         photosPath = SavePhoto(attachments)
@@ -79,7 +77,6 @@ def Router(msgId):
             sendDoc(path=docPath, title=user.lastName, user=user)
     except Exception as e:
         print(e)
-
 
 if __name__ == '__main__':
     from vk_api.longpoll import VkLongPoll, VkEventType

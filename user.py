@@ -66,7 +66,7 @@ class UserProcessing():
         try:
             self.user["messages"].append(msg)
         except:
-            self.user["messages"] = [msg, ]
+            self.user["messages"] = [None, msg, ]
         self.Save(self.user)
         self.user = self.Load()
         return self.getMsgList()

@@ -14,7 +14,8 @@ def commands(command, context, user, message, api, token, luser=None, lusers=Non
             print(msg)
             message.sendMessage(message=msg, uid=user.uid)
         except:
-            message.sendError(uid=user.uid)
+            pass
+            # message.sendError(uid=user.uid)
     if command == "Удалить получателя":
         try:
             rvUser = UserProcessing(uid=user.uid).deleteLink(int(context))
@@ -23,18 +24,21 @@ def commands(command, context, user, message, api, token, luser=None, lusers=Non
             print(msg)
             message.sendMessage(message=msg, uid=user.uid)
         except:
-            message.sendError(uid=user.uid)
+            pass
+            # message.sendError(uid=user.uid)
 
     if context == "Добавить получателя":
         message.sendMessage(message="отправь id пользователя", uid=user.uid)
     if context == "Удалить получателя":
         s = "Кого? \n отправь цифру\n"
-        for i in range(len(lusers)):
-            i = int(i)
-            luid = int(lusers[i])
-            vkUser = getVkUser(uid=luid, api=api, token=token)
-            s += "{0} {1}\n".format(i, vkUser[0]['first_name'])
-        message.sendMessage(message=s, uid=user.uid)
+        if lusers != None:
+            for i in range(len(lusers)):
+                i = int(i)
+                luid = int(lusers[i])
+                vkUser = getVkUser(uid=luid, api=api, token=token)
+                s += "{0} {1}\n".format(i, vkUser[0]['first_name'])
+            message.sendMessage(message=s, uid=user.uid)
+        else:  message.sendMessage(message="список пуст", uid=user.uid)
 
     if context == "Мой id":
         message.sendMessage(message=user.uid, uid=user.uid)
