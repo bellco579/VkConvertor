@@ -19,7 +19,7 @@ def commands(command, context, user, message, api, token, luser=None, lusers=Non
     if command == "Удалить получателя":
         try:
             rvUser = UserProcessing(uid=user.uid).deleteLink(int(context))
-            vkUser = getVkUser(uid=rvUser,api=api,token=token)
+            vkUser = getVkUser(uid=rvUser, api=api, token=token)
             msg = "{} больше не будет получать pdf".format(vkUser[0]['first_name'])
             print(msg)
             message.sendMessage(message=msg, uid=user.uid)
@@ -31,14 +31,21 @@ def commands(command, context, user, message, api, token, luser=None, lusers=Non
         message.sendMessage(message="отправь id пользователя", uid=user.uid)
     if context == "Удалить получателя":
         s = "Кого? \n отправь цифру\n"
-        if lusers != None:
+        ex1 = lusers != None
+        ex2 = False
+        try:
+            ex2 = len(lusers) != 0
+        except:
+            pass
+        if ex1 or ex2:
             for i in range(len(lusers)):
                 i = int(i)
                 luid = int(lusers[i])
                 vkUser = getVkUser(uid=luid, api=api, token=token)
                 s += "{0} {1}\n".format(i, vkUser[0]['first_name'])
             message.sendMessage(message=s, uid=user.uid)
-        else:  message.sendMessage(message="список пуст", uid=user.uid)
+        else:
+            message.sendMessage(message="список пуст", uid=user.uid)
 
     if context == "Мой id":
         message.sendMessage(message=user.uid, uid=user.uid)

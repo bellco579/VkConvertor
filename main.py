@@ -16,6 +16,9 @@ import requests
 import vk_api
 
 token = ''
+with open('json/config.json', "r") as js_file:
+    config = json.load(js_file)
+    token = config['token']
 vk_session = vk_api.VkApi(token=token)
 session = vk.Session()
 api = vk.API(session, v=5.8)
